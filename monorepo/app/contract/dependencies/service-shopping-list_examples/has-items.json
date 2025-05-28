@@ -1,0 +1,31 @@
+{
+  "partial": {
+    "http-request": {
+      "path": "/shopping-list/items",
+      "method": "GET"
+    },
+    "http-response": {
+      "status": 200,
+      "body": [
+        {
+          "id": "35fd3aa6-4e69-4090-9d90-37c7d3d94d8f",
+          "productId": "1710c4c3-703d-40ec-a560-53b4400b3c9a",
+          "name": "Milk",
+          "completed": false
+        },
+        {
+          "id": "682e1b81-39a3-4e7c-a003-65d4073875e5",
+          "productId": "4065662f-a4a5-468a-86e9-1ea852458abc",
+          "name": "Bread",
+          "completed": true
+        },
+        {
+          "id": "53af47d7-28f4-4ae5-87e8-8f3213723024",
+          "productId": "0d774840-3f20-4710-a7b4-5bdeea73bf1d",
+          "name": "Yogurt",
+          "completed": false
+        }
+      ]
+    }
+  }
+}

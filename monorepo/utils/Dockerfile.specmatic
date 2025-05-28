@@ -1,0 +1,8 @@
+FROM eclipse-temurin:21
+
+WORKDIR /specmatic
+ADD https://github.com/znsio/specmatic/releases/download/2.8.0/specmatic.jar /specmatic/specmatic.jar
+
+WORKDIR /app
+
+ENTRYPOINT ["java", "-jar", "/specmatic/specmatic.jar"]

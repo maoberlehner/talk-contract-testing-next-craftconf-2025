@@ -1,0 +1,43 @@
+{
+  "name": "shopping-list",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run contract:schema && next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "contract:pull": "node --disable-warning=ExperimentalWarning ../utils/scripts/contract-pull.ts",
+    "contract:push": "npm run contract:validate && node --disable-warning=ExperimentalWarning ../utils/scripts/contract-push.ts",
+    "contract:schema": "npm run contract:pull && openapi-typescript ./contract/dependencies/service-shopping-list.yaml -o ./repositories/service-shopping-list.d.ts && openapi-typescript ./contract/dependencies/service-rating.yaml -o ./repositories/service-rating.d.ts",
+    "contract:validate": "npm run contract:pull && node --disable-warning=ExperimentalWarning ../utils/scripts/contract-validate.ts"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.2",
+    "openapi-fetch": "^0.14.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.3.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.52.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "openapi-typescript": "^7.8.0",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.0",
+    "typescript": "^5"
+  }
+}

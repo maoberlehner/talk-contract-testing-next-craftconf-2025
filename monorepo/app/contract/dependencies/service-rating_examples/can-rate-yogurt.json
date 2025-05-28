@@ -1,0 +1,17 @@
+{
+  "partial": {
+    "http-request": {
+      "path": "/ratings",
+      "method": "POST",
+      "body": {
+        "score": 5
+      }
+    },
+    "http-response": {
+      "status": 201,
+      "body": {
+        "score": 5
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "service-shopping-list",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run contract:schema && PORT=3100 SERVICE_SHOPPING_PRODUCT_URL=http://localhost:3200 node --watch-path=./src ./src/index.ts",
+    "start": "node ./src/index.ts",
+    "contract:pull": "node --disable-warning=ExperimentalWarning ../utils/scripts/contract-pull.ts",
+    "contract:push": "npm run contract:validate && node --disable-warning=ExperimentalWarning ../utils/scripts/contract-push.ts",
+    "contract:schema": "npm run contract:pull && openapi-typescript ./contract/service-shopping-list.yaml -o ./src/service-shopping-list.d.ts && openapi-typescript ./contract/dependencies/service-product.yaml -o ./src/service-product.d.ts",
+    "contract:validate": "npm run contract:pull && node --disable-warning=ExperimentalWarning ../utils/scripts/contract-validate.ts",
+    "contract:test": "npm run contract:pull && node --disable-warning=ExperimentalWarning ../utils/scripts/contract-test.ts --app-port 3100 --app-health-endpoint /shopping-list/health"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.2",
+    "hono": "^4.7.10",
+    "openapi-fetch": "^0.14.0",
+    "openapi-ts-router": "^0.2.14",
+    "validation-adapters": "^0.0.25",
+    "zod": "^3.25.30"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "@types/node": "^20.11.17",
+    "openapi-typescript": "^7.8.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
+  }
+}

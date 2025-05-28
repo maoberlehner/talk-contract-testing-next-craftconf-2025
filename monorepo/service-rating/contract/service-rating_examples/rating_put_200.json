@@ -1,0 +1,21 @@
+{
+  "http-request": {
+    "path": "/ratings/866f1317-4b78-4c1a-b403-dccad2ef8d07",
+    "method": "PUT",
+    "body": {
+      "productId": "550e8400-e29b-41d4-a716-446655440000",
+      "score": 5,
+      "comment": "Updated review - absolutely fantastic!"
+    }
+  },
+  "http-response": {
+    "status": 200,
+    "body": {
+      "id": "544e551e-d6aa-4298-be3d-01b67f3e9a64",
+      "productId": "550e8400-e29b-41d4-a716-446655440000",
+      "score": 5,
+      "comment": "Updated review - absolutely fantastic!",
+      "createdAt": "(datetime)"
+    }
+  }
+}

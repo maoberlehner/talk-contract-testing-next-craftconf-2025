@@ -1,0 +1,14 @@
+{
+  "http-request": {
+    "path": "/ratings/average/b5f8eaf6-4a0a-4147-b7ff-496b61a8afa7",
+    "method": "GET"
+  },
+  "http-response": {
+    "status": 200,
+    "body": {
+      "productId": "b5f8eaf6-4a0a-4147-b7ff-496b61a8afa7",
+      "averageScore": 3,
+      "totalRatings": 2
+    }
+  }
+}

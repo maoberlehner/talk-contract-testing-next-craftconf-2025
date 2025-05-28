@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: Rating Service
+  version: 1.0.0
+  description: Manages product ratings and reviews
+paths:
+  /ratings:
+    post:
+      summary: Create a new rating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RatingRequest"
+      responses:
+        "201":
+          description: Rating created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RatingResponse"
+
+    get:
+      summary: Get ratings
+      parameters:
+        - name: productId
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter ratings by product ID
+      responses:
+        "200":
+          description: List of ratings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RatingResponse"
+
+  /ratings/{ratingId}:
+    put:
+      summary: Update a rating
+      parameters:
+        - name: ratingId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RatingRequest"
+      responses:
+        "200":
+          description: Updated rating
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RatingResponse"
+
+    delete:
+      summary: Delete a rating
+      parameters:
+        - name: ratingId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Rating deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - deleted
+                properties:
+                  deleted:
+                    type: boolean
+                    default: true
+
+  /ratings/average/{productId}:
+    get:
+      summary: Get average rating for a product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Average rating data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AverageRatingResponse"
+
+components:
+  schemas:
+    RatingRequest:
+      type: object
+      required:
+        - productId
+        - score
+      properties:
+        productId:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        score:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 4
+        comment:
+          type: string
+          example: Great product, highly recommended!
+
+    RatingResponse:
+      allOf:
+        - $ref: "#/components/schemas/RatingRequest"
+        - type: object
+          required:
+            - id
+            - createdAt
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 550e8400-e29b-41d4-a716-446655440000
+            createdAt:
+              type: string
+              format: date-time
+              example: 2023-12-01T10:30:00Z
+
+    AverageRatingResponse:
+      type: object
+      required:
+        - productId
+        - averageScore
+        - totalRatings
+      properties:
+        productId:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        averageScore:
+          type: number
+          format: float
+          minimum: 1
+          maximum: 5
+          example: 4.2
+        totalRatings:
+          type: integer
+          minimum: 0
+          example: 25

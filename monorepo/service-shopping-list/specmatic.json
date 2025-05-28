@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "contracts": [
+    {
+      "filesystem": {
+        "directory": "contract"
+      },
+      "provides": ["service-shopping-list.yaml"]
+    },
+    {
+      "filesystem": {
+        "directory": "contract/dependencies"
+      },
+      "consumes": ["service-product.yaml"]
+    }
+  ]
+}

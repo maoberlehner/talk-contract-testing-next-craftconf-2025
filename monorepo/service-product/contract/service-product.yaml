@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: Product Service
+  version: 1.0.0
+  description: Manages product information
+paths:
+  /products:
+    post:
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductRequest"
+      responses:
+        "201":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+
+    get:
+      summary: Search products
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+          description: Product name to search for
+      responses:
+        "200":
+          description: List of matching products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProductResponse"
+
+  /products/{productId}:
+    put:
+      summary: Update a product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductRequest"
+      responses:
+        "200":
+          description: Updated product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+
+    delete:
+      summary: Delete a product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - deleted
+                properties:
+                  deleted:
+                    type: boolean
+                    default: true
+
+components:
+  schemas:
+    ProductRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: Organic Whole Milk
+        brand:
+          type: string
+          example: Organic Valley
+
+    ProductResponse:
+      allOf:
+        - $ref: "#/components/schemas/ProductRequest"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 550e8400-e29b-41d4-a716-446655440000

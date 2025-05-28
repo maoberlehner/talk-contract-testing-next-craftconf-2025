@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+import { serviceShoppingList } from "../utils/api-client.ts";
+
+await serviceShoppingList.POST("/shopping-list/items", {
+  body: {
+    id: "a09ab83e-0245-42ab-806f-1eb959a517f1",
+    productId: "4065662f-a4a5-468a-86e9-1ea852458abc",
+    name: "Butter",
+    quantity: 1,
+    completed: false,
+  },
+});

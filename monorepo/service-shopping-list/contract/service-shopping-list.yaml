@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: Shopping List Service
+  version: 1.0.0
+  description: Manages grocery/shopping list items
+paths:
+  /shopping-list/items:
+    post:
+      summary: Create a new shopping list item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingListItemRequest"
+      responses:
+        "201":
+          description: Item created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListItemResponse"
+
+    get:
+      summary: Get all shopping list items
+      responses:
+        "200":
+          description: List of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ShoppingListItemResponse"
+
+  /shopping-list/items/{itemId}:
+    put:
+      summary: Update an item
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShoppingListItemRequest"
+      responses:
+        "200":
+          description: Updated item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShoppingListItemResponse"
+
+    delete:
+      summary: Delete an item
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Item deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - deleted
+                properties:
+                  deleted:
+                    type: boolean
+                    default: true
+
+components:
+  schemas:
+    ShoppingListItemRequest:
+      type: object
+      required:
+        - name
+        - completed
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        productId:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          example: Milk
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+        completed:
+          type: boolean
+          default: false
+          example: false
+
+    ShoppingListItemResponse:
+      allOf:
+        - $ref: "#/components/schemas/ShoppingListItemRequest"
+        - type: object
+          required:
+            - id
+            - productId
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: 550e8400-e29b-41d4-a716-446655440000
+            productId:
+              type: string
+              format: uuid
+              example: 550e8400-e29b-41d4-a716-446655440000

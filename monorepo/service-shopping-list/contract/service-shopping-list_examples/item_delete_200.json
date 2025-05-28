@@ -1,0 +1,12 @@
+{
+  "http-request": {
+    "path": "/shopping-list/items/682e1b81-39a3-4e7c-a003-65d4073875e5",
+    "method": "DELETE"
+  },
+  "http-response": {
+    "status": 200,
+    "body": {
+      "deleted": true
+    }
+  }
+}

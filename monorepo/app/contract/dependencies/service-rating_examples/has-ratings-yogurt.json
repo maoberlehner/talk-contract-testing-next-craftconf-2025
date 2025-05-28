@@ -1,0 +1,15 @@
+{
+  "partial": {
+    "http-request": {
+      "path": "/ratings/average/0d774840-3f20-4710-a7b4-5bdeea73bf1d",
+      "method": "GET"
+    },
+    "http-response": {
+      "status": 200,
+      "body": {
+        "productId": "0d774840-3f20-4710-a7b4-5bdeea73bf1d",
+        "averageScore": 3
+      }
+    }
+  }
+}

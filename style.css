@@ -1,0 +1,125 @@
+html,
+body,
+#app,
+#page-root {
+  font-family:
+    "SF Pro Display",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-weight: 500;
+}
+
+ol {
+  list-style: decimal;
+}
+
+code {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.slidev-layout {
+  font-size: 2.5rem;
+}
+
+h1 {
+  font-weight: 800 !important;
+}
+
+.accent {
+  color: #02b3e2;
+}
+
+.slidev-layout:not([layout="image"])::after {
+  content: "";
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 0.65rem;
+  background-color: #02b3e2;
+}
+
+.slidev-layout.intro {
+  display: flex;
+}
+
+.slidev-layout li {
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.slidev-layout li:not(:first-child) {
+  margin-top: 1.5rem;
+}
+
+.twitter-tweet {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+video[controls]::-webkit-media-controls-panel {
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+video[controls]::-webkit-media-controls-timeline {
+  opacity: 1 !important;
+}
+
+.slidev-code {
+  font-size: 1.25rem !important;
+  background-color: transparent !important;
+}
+
+.diff {
+  transition: background-color 0.5s;
+  width: 100%;
+  display: inline-block;
+}
+
+.diff.remove {
+  background-color: rgba(244, 63, 94, 0.16);
+  opacity: 0.6;
+}
+
+.diff.remove::before {
+  position: absolute;
+  content: "-";
+  color: #cb7676;
+}
+
+.diff.add {
+  background-color: rgba(16, 185, 129, 0.16);
+}
+
+.diff.add::before {
+  position: absolute;
+  content: "+";
+  color: #3dd68c;
+}
+
+strong {
+  font-weight: 800 !important;
+}
+
+.footnote {
+  font-size: 0.25em;
+  position: absolute;
+  bottom: 0.5em;
+  left: 1.5em;
+  text-align: left;
+  line-height: 1.25 !important;
+}
+
+small {
+  font-size: 0.5em;
+}

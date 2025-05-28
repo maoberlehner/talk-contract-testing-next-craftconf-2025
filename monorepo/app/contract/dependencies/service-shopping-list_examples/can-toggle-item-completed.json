@@ -1,0 +1,20 @@
+{
+  "partial": {
+    "http-request": {
+      "path": "/shopping-list/items/35fd3aa6-4e69-4090-9d90-37c7d3d94d8f",
+      "method": "PUT",
+      "body": {
+        "completed": true
+      }
+    },
+    "http-response": {
+      "status": 200,
+      "body": {
+        "id": "35fd3aa6-4e69-4090-9d90-37c7d3d94d8f",
+        "productId": "1710c4c3-703d-40ec-a560-53b4400b3c9a",
+        "name": "Milk",
+        "completed": true
+      }
+    }
+  }
+}

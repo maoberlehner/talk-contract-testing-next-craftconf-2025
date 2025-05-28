@@ -1,0 +1,12 @@
+{
+  "http-request": {
+    "path": "/products/a9068872-9017-47bf-a1d4-c8ba70d99bd5",
+    "method": "DELETE"
+  },
+  "http-response": {
+    "status": 200,
+    "body": {
+      "deleted": true
+    }
+  }
+}

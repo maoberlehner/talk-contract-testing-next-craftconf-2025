@@ -1,0 +1,12 @@
+{
+  "http-request": {
+    "path": "/ratings/79b03f92-f834-4c59-ac49-8da420ec9b2b",
+    "method": "DELETE"
+  },
+  "http-response": {
+    "status": 200,
+    "body": {
+      "deleted": true
+    }
+  }
+}

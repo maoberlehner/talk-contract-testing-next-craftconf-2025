@@ -1,0 +1,30 @@
+services:
+  app:
+    image: shopping-list-monorepo-app
+    ports:
+      - "${APP_PORT:-3000}:8080"
+    environment:
+      - SERVICE_GATEWAY_URL=http://specmatic:9000
+    depends_on:
+      specmatic:
+        condition: service_healthy
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      timeout: 2s
+      retries: 20
+      start_period: 1s
+
+  specmatic:
+    image: shopping-list-monorepo-specmatic
+    ports:
+      - "${SPECMATIC_PORT:-3010}:9000"
+    volumes:
+      - ./:/app
+    command: stub
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/actuator/health"]
+      timeout: 2s
+      retries: 20
+      start_period: 1s

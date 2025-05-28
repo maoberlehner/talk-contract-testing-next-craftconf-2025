@@ -1,0 +1,16 @@
+{
+  "http-request": {
+    "path": "/products/21de4698-6f2f-40a6-847b-72125a376a1a",
+    "method": "PUT",
+    "body": {
+      "name": "Dark Bread"
+    }
+  },
+  "http-response": {
+    "status": 200,
+    "body": {
+      "id": "21de4698-6f2f-40a6-847b-72125a376a1a",
+      "name": "Dark Bread"
+    }
+  }
+}

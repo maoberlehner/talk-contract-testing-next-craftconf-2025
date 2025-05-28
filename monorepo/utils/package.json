@@ -1,0 +1,12 @@
+{
+  "name": "utils",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.19",
+    "typescript": "^5.8.3"
+  }
+}
