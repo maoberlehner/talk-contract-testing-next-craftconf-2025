@@ -106,7 +106,7 @@ layout: statement
 layout: statement
 ---
 
-<h1>What About <span class="accent">Mocks?</span></h1>
+<h1>What About<br><span class="accent">Mocks?</span></h1>
 
 ---
 layout: statement
@@ -148,6 +148,28 @@ layout: statement
 
 <img src="/images/green-tests.avif" style="width:600px">
 
+
+---
+layout: intro
+---
+
+```ts
+// Mocking with Playwright
+it('should be possible to remove an item', () => [
+  await page.route('https://items.xyz.com/items', async route => {
+    const json = [
+      { name: 'Bread', id: 1 }, // [!code --]
+      { name: 'Butter', id: 2 },  // [!code --]
+      { title: 'Bread', id: 1 }, // [!code ++]
+      { title: 'Butter', id: 2 },  // [!code ++]
+    ];
+    await route.fulfill({ json });
+  });
+
+  // ...
+]);
+```
+
 ---
 layout: intro
 ---
@@ -186,7 +208,7 @@ layout: statement
 layout: statement
 ---
 
-<h1><span class="accent">Contract Testing</span><br>For Microservices<br>is a Must!</h1>
+<img src="/images/contract.svg" style="width:300px">
 
 ---
 layout: intro
@@ -197,6 +219,12 @@ layout: intro
   <li v-click>E2E tests hinder independent deployments.</li>
   <li v-click>Without contracts, we can't deploy with confidence.</li>
 </ul>
+
+---
+layout: statement
+---
+
+<h1><span class="accent">Contract Testing</span><br>For Microservices<br>is a Must!</h1>
 
 ---
 layout: statement
@@ -252,25 +280,19 @@ layout: statement
 layout: statement
 ---
 
-<img src="/images/contract.svg" style="width:300px">
-
----
-layout: statement
----
-
 <img src="/images/contract-repository.svg" style="width:600px">
 
 ---
 layout: statement
 ---
 
-<img src="/images/contract-push.svg" style="width:900px">
+<img src="/images/contract-pull.svg" style="width:900px">
 
 ---
 layout: statement
 ---
 
-<img src="/images/contract-pull.svg" style="width:900px">
+<img src="/images/contract-push.svg" style="width:900px">
 
 ---
 layout: statement
