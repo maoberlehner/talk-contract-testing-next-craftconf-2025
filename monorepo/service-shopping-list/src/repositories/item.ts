@@ -27,7 +27,7 @@ export type ItemCreate = z.infer<typeof itemCreateSchema>;
 
 let items: Item[] = [];
 
-export const add = async (item: ItemCreate) => {
+export const add = async (item: ItemCreate): Promise<Item> => {
   // TODO repository
   const { data: products } = await serviceProduct.GET("/products", {
     params: { query: { name: item.name } },
@@ -55,14 +55,14 @@ export const add = async (item: ItemCreate) => {
   return itemNew;
 };
 
-export const list = async () => {
+export const list = async (): Promise<Item[]> => {
   return items;
 };
 
 export const update = async (
   id: Item["id"],
   itemPartial: Partial<ItemCreate>
-) => {
+): Promise<Item> => {
   const item = items.find((x) => x.id === id);
   if (!item) throw new Error(`Item with id ${id} does not exist!`);
 
@@ -79,6 +79,6 @@ export const update = async (
   return itemUpdated;
 };
 
-export const remove = async (id: Item["id"]) => {
+export const remove = async (id: Item["id"]): Promise<void> => {
   items = items.filter((item) => item.id !== id);
 };

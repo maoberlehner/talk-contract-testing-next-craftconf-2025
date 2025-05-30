@@ -132,16 +132,11 @@ components:
         - type: object
           required:
             - id
-            - createdAt
           properties:
             id:
               type: string
               format: uuid
               example: 550e8400-e29b-41d4-a716-446655440000
-            createdAt:
-              type: string
-              format: date-time
-              example: 2023-12-01T10:30:00Z
 
     AverageRatingResponse:
       type: object

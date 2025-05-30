@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { createHonoOpenApiRouter } from "openapi-ts-router";
 import { zValidator } from "validation-adapters/zod";
+import z from "zod";
 
 import {
   add,
@@ -10,10 +11,8 @@ import {
   list,
   remove,
   update,
-  type ItemCreate,
 } from "./repositories/item.ts";
 import type { paths } from "./service-shopping-list.d.ts";
-import z from "zod";
 
 const app = new Hono();
 app.use(logger());
@@ -42,7 +41,7 @@ router.put("/shopping-list/items/:itemId", {
     })
   ),
   handler: async (c) => {
-    const item = await c.req.json<ItemCreate>();
+    const item = c.req.valid("json");
     const { itemId } = c.req.valid("param");
     return c.json(await update(itemId, item));
   },

@@ -193,11 +193,6 @@ export interface components {
              * @example 550e8400-e29b-41d4-a716-446655440000
              */
             id: string;
-            /**
-             * Format: date-time
-             * @example 2023-12-01T10:30:00Z
-             */
-            createdAt: string;
         };
         AverageRatingResponse: {
             /**

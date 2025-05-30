@@ -1,16 +1,38 @@
 import { randomUUID } from "node:crypto";
+import z from "zod";
+
 import type { components } from "../service-rating.d.ts";
 
-export type Rating = components["schemas"]["RatingResponse"];
-export type RatingCreate = components["schemas"]["RatingRequest"];
-export type AverageRating = components["schemas"]["AverageRatingResponse"];
+export const ratingSchema: z.ZodType<components["schemas"]["RatingResponse"]> =
+  z.object({
+    id: z.string(),
+    productId: z.string(),
+    score: z.number(),
+  });
+export type Rating = z.infer<typeof ratingSchema>;
+
+export const ratingCreateSchema: z.ZodType<
+  components["schemas"]["RatingRequest"]
+> = z.object({
+  productId: z.string(),
+  score: z.number(),
+});
+export type RatingCreate = z.infer<typeof ratingCreateSchema>;
+
+export const ratingAverageSchema: z.ZodType<
+  components["schemas"]["AverageRatingResponse"]
+> = z.object({
+  productId: z.string(),
+  averageScore: z.number(),
+  totalRatings: z.number(),
+});
+export type RatingAverage = z.infer<typeof ratingAverageSchema>;
 
 let ratings: Rating[] = [];
 
 export const add = async (rating: RatingCreate): Promise<Rating> => {
   const ratingNew: Rating = {
     id: randomUUID(),
-    createdAt: new Date().toISOString(),
     ...rating,
   };
   ratings.push(ratingNew);
@@ -50,9 +72,7 @@ export const remove = async (id: Rating["id"]): Promise<void> => {
   ratings = ratings.filter((r) => r.id !== id);
 };
 
-export const getAverageRating = async (
-  productId: string
-): Promise<AverageRating> => {
+export const getAverage = async (productId: string): Promise<RatingAverage> => {
   const productRatings = ratings.filter((r) => r.productId === productId);
 
   if (productRatings.length === 0) {

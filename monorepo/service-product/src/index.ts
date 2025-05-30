@@ -1,38 +1,69 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { createHonoOpenApiRouter } from "openapi-ts-router";
+import { zValidator } from "validation-adapters/zod";
+import z from "zod";
 
 import {
   add,
   list,
+  productCreateSchema,
   remove,
   update,
-  type ProductCreate,
 } from "./repositories/product.ts";
+import type { paths } from "./service-product.d.ts";
 
 const app = new Hono();
 app.use(logger());
 
-app.post("/products", async (c) => {
-  const item = await c.req.json<ProductCreate>();
-  return c.json(await add(item), 201);
+const router = createHonoOpenApiRouter<paths>(app);
+
+router.post("/products", {
+  bodyValidator: zValidator(productCreateSchema),
+  handler: async (c) => {
+    const item = await c.req.valid("json");
+    return c.json(await add(item), 201);
+  },
 });
 
-app.get("/products", async (c) => {
-  const name = c.req.param("name");
-  return c.json(await list(name ? { filter: { name } } : undefined));
+router.get("/products", {
+  queryValidator: zValidator(
+    z.object({
+      name: z.string().optional(),
+    })
+  ),
+  handler: async (c) => {
+    const { name } = c.req.valid("query");
+    return c.json(await list(name ? { filter: { name } } : undefined));
+  },
 });
 
-app.put("/products/:id", async (c) => {
-  const item = await c.req.json<ProductCreate>();
-  const id = c.req.param("id");
-  return c.json(await update(id, item));
+router.put("/products/:productId", {
+  bodyValidator: zValidator(productCreateSchema),
+  pathValidator: zValidator(
+    z.object({
+      productId: z.string(),
+    })
+  ),
+  handler: async (c) => {
+    const item = await c.req.valid("json");
+    const { productId } = c.req.valid("param");
+    return c.json(await update(productId, item));
+  },
 });
 
-app.delete("/products/:id", async (c) => {
-  const id = c.req.param("id");
-  await remove(id);
-  return c.json({ deleted: true }, 200);
+router.del("/products/:productId", {
+  pathValidator: zValidator(
+    z.object({
+      productId: z.string(),
+    })
+  ),
+  handler: async (c) => {
+    const { productId } = c.req.valid("param");
+    await remove(productId);
+    return c.json({ deleted: true }, 200);
+  },
 });
 
 app.get("/products/health", async (c) => {

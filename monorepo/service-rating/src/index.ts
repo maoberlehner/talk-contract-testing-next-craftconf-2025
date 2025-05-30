@@ -1,43 +1,85 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { createHonoOpenApiRouter } from "openapi-ts-router";
+import { zValidator } from "validation-adapters/zod";
+import z from "zod";
+
 import {
   add,
   list,
   remove,
   update,
-  getAverageRating,
-  type RatingCreate,
+  getAverage,
+  ratingCreateSchema,
 } from "./repositories/rating.ts";
+import type { paths } from "./service-rating.d.ts";
 
 const app = new Hono();
 app.use(logger());
 
-app.post("/ratings", async (c) => {
-  const rating = await c.req.json<RatingCreate>();
-  return c.json(await add(rating), 201);
+const router = createHonoOpenApiRouter<paths>(app);
+
+router.post("/ratings", {
+  bodyValidator: zValidator(ratingCreateSchema),
+  handler: async (c) => {
+    const rating = await c.req.valid("json");
+    return c.json(await add(rating), 201);
+  },
 });
 
-app.get("/ratings", async (c) => {
-  const productId = c.req.query("productId");
-  return c.json(await list(productId ? { filter: { productId } } : undefined));
+router.get("/ratings", {
+  queryValidator: zValidator(
+    z.object({
+      productId: z.string().optional(),
+    })
+  ),
+  handler: async (c) => {
+    const { productId } = c.req.valid("query");
+    return c.json(
+      await list(productId ? { filter: { productId } } : undefined)
+    );
+  },
 });
 
-app.put("/ratings/:id", async (c) => {
-  const rating = await c.req.json<RatingCreate>();
-  const id = c.req.param("id");
-  return c.json(await update(id, rating));
+router.put("/ratings/:ratingId", {
+  bodyValidator: zValidator(ratingCreateSchema),
+  pathValidator: zValidator(
+    z.object({
+      ratingId: z.string(),
+    })
+  ),
+  handler: async (c) => {
+    const rating = await c.req.valid("json");
+    const { ratingId } = c.req.valid("param");
+    return c.json(await update(ratingId, rating));
+  },
 });
 
-app.delete("/ratings/:id", async (c) => {
-  const id = c.req.param("id");
-  await remove(id);
-  return c.json({ deleted: true }, 200);
+router.del("/ratings/:ratingId", {
+  pathValidator: zValidator(
+    z.object({
+      ratingId: z.string(),
+    })
+  ),
+  handler: async (c) => {
+    const { ratingId } = c.req.valid("param");
+    await remove(ratingId);
+    return c.json({ deleted: true }, 200);
+  },
 });
 
-app.get("/ratings/average/:productId", async (c) => {
-  const productId = c.req.param("productId");
-  return c.json(await getAverageRating(productId));
+// @ts-expect-error query parameters not in the OpenAPI spec are expected here.
+router.get("/ratings/average/:productId", {
+  pathValidator: zValidator(
+    z.object({
+      productId: z.string(),
+    })
+  ),
+  handler: async (c) => {
+    const { productId } = c.req.valid("param");
+    return c.json(await getAverage(productId));
+  },
 });
 
 app.get("/ratings/health", async (c) => {
